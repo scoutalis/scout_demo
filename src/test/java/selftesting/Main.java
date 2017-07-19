@@ -10,6 +10,7 @@ public class Main {
 		Driver.getInstance();
 		Driver.getBaseUrl();
 		Driver.closeBrowser();
+		System.out.println("");
 
 	}
 
