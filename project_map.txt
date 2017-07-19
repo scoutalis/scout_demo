@@ -1,0 +1,5 @@
+Webdrivers binaries destination:
+	src\main\webdrivers\
+
+Webdriver config.properties file destination:
+	src\main\webdrivers\config.properties
