@@ -1,5 +1,5 @@
 package scout.alis.core.ui;
 
-public class WebCombobox {
+public class WebComboBox {
 
 }

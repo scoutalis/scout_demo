@@ -7,6 +7,7 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -14,9 +15,12 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 
 
 
+
 public class Driver {
 
     public static WebDriver instance = null;
+    private static WebElement element = null;
+    
     private static String projectDir = System.getProperty("user.dir");
     private static Properties props = loadProperties();
 
@@ -69,5 +73,7 @@ public class Driver {
 
     public static void closeBrowser(){
         instance.quit();
-    }
+    }    
+      
+    
 }
