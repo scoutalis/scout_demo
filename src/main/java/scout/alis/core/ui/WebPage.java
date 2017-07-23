@@ -21,6 +21,7 @@ public class WebPage {
 	public static WebComboBox alisComboBox = new WebComboBox();
 	public static WebEdit alisTextField = new WebEdit();
 	public static WebTable alisTable = new WebTable();
+	public static CheckBox alisCheckBox = new CheckBox();
 	
 	
 	public static String getActivePageName(){
