@@ -27,6 +27,16 @@ public class Main {
 		activePageName = WebPage.getActivePageName();
 		Assert.assertEquals(activePageName, "Client Details");
 		
+		WebPage.alisTextField.setTextFieldByCaption("First Name", "John 2307171600");
+		WebPage.alisTextField.setTextFieldByCaption("Middle Name", "Maininsured");
+		WebPage.alisTextField.setTextFieldByCaption("Last Name", "Fifty");
+		WebPage.alisTextField.setDateFieldByCaption("Date Of Birth", "01/01/1965");
+		WebPage.alisComboBox.setComboBoxByCaption("Gender", "male");
+		WebPage.alisComboBox.setComboBoxByCaption("Tobacco", "No");
+		WebPage.alisCheckBox.setCheckboxTrueByLabelName("Non Driver");
+		
+		
+		
 		WebPage.alisButton.clickAlisCloseButton();
 		
 		WebPage.waitLoading();
