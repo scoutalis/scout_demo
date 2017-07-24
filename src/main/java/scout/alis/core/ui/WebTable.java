@@ -63,6 +63,13 @@ public class WebTable {
 	
 	}
 	
+	public void insertDataIntonewRow(Object data){
+		
+	}
+	
+	public void insertDataToRow(Object data , int row){
+		
+	}
 	
 	private WebElement findTableByCaption(String sCaption)
 	{
