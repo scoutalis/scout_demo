@@ -18,7 +18,7 @@ public class WebPage {
 	public static WebButton alisButton = new WebButton();
 	public static WebComboBox alisComboBox = new WebComboBox();
 	public static WebEdit alisTextField = new WebEdit();
-	public static WebTable alisTable = new WebTable();
+	//public static WebTable alisTable = new WebTable();
 	public static CheckBox alisCheckBox = new CheckBox();
 	
 	
