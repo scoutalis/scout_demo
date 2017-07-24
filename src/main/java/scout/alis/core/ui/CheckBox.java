@@ -25,7 +25,7 @@ public class CheckBox {
         checkBoxInputField.click();
     }
 
-    public static void setCheckboxTrueByLabelName(String labelName){
+    public void setCheckboxTrueByLabelName(String labelName){
         fullXpath = String.format("//span[contains(@class, 'v-checkbox')][label[.='%s']]", labelName);
         WebElement checkBoxWithLabel = FindWebElements.findWebElementVisibleByXpath(fullXpath);
         WebElement checkBoxInputField = checkBoxWithLabel.findElement(By.tagName("input"));

@@ -13,10 +13,8 @@ public class WebPage {
 	protected static WebDriver DRIVER = Driver.instance;
 	private static WebElement element = null;
 	private static String fullXpath = null;
-	
 	private static String activePageName = null;
-	private static WebElement alisMenuItem = null;
-	
+	private static WebElement alisMenuItem = null;	
 	public static WebButton alisButton = new WebButton();
 	public static WebComboBox alisComboBox = new WebComboBox();
 	public static WebEdit alisTextField = new WebEdit();

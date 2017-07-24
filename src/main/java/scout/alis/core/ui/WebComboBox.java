@@ -13,11 +13,14 @@ public class WebComboBox {
 	private static WebElement element = null;
 	private static String fullXpath = null;
 	
-    public static void setComboBoxByCaption(String filterFieldCaption, String valueToSet){
+    public void setComboBoxByCaption(String filterFieldCaption, String valueToSet){
 
         fullXpath = String.format("//div[div[text()='%s']]", filterFieldCaption);
         WebElement fieldCaption = FindWebElements.findWebElementVisibleByXpath(fullXpath);
-        WebElement filterInputField = fieldCaption.findElement(By.xpath("following-sibling::div/input"));
+        WebElement parentElement = fieldCaption.findElement(By.xpath("./.."));   
+        WebElement filterInputField = parentElement.findElement(By.tagName("input"));
+        
+        //WebElement filterInputField = fieldCaption.findElement(By.xpath("following-sibling::div/input"));
         filterInputField.clear();
         filterInputField.sendKeys(valueToSet);
         WebElement filterList = FindWebElements.findWebElementVisibleById("VAADIN_COMBOBOX_OPTIONLIST");

@@ -43,7 +43,6 @@ public class Driver {
     public static void getInstance(){
 
         String browser = props.getProperty("browser");
-
         if(instance == null){
             if(browser.equalsIgnoreCase("chrome")){
                 System.setProperty("webdriver.chrome.driver", projectDir + "\\src\\main\\webdrivers\\chromedriver.exe");
@@ -67,8 +66,9 @@ public class Driver {
 
     }
 
-    public static void getBaseUrl(){
-        instance.get(props.getProperty("baseUrl"));
+    public static void getBaseUrl(String sURL){
+        //instance.get(props.getProperty("baseUrl"));
+    	instance.get(sURL);
     }
 
     public static void closeBrowser(){

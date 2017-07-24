@@ -12,7 +12,7 @@ public class MainTest {
   public void main() {
 
 	Driver.getInstance();
-	Driver.getBaseUrl();	
+	Driver.getBaseUrl("http://alis-deploy15:8094/tfl_pl_env8/alis#alis");	
 	Driver.closeBrowser();
     
     
