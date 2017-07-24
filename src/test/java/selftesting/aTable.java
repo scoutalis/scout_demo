@@ -13,6 +13,7 @@ import org.testng.Assert;
 
 import scout.alis.core.ui.LoginPage;
 import scout.alis.core.ui.WebPage;
+import scout.alis.core.ui.WebTable;
 import scout.testdata.ExcelUtils;
 import webdriver.Driver;
 import webdriver.FindWebElements;
@@ -27,7 +28,7 @@ public class aTable {
 	public static void main(String[] args) throws Exception {
 		 String sTestCaseName;
 	        int iTestCaseRow=-1;
-			String sProject = "AF"; //props.getProperty("Project");		
+			String sProject = "TFL"; //props.getProperty("Project");		
 			String path =  projectDir + "\\testData\\LoginData.xlsx" ;
 			String sheetName = "LogIn";
 			
@@ -68,9 +69,9 @@ public class aTable {
 			
 			activePageName = WebPage.getActivePageName();
 			Assert.assertEquals(activePageName, "Client Details");
-			
-			//String sTable = "Address Details";
-			String sTable = "Contact Details";
+			/*
+			String sTable = "Address Details";
+			//String sTable = "Contact Details";
 			
 			    
 	        String fullXpath = String.format("//div[div[text()='%s']]", sTable);
@@ -95,6 +96,21 @@ public class aTable {
 	        	System.out.println(item.getText());
 	        }
 			
+	        */
+	        WebTable table = new WebTable("Address Details");
+	        
+	        String[] colname = table.getTableHeaders();
+	        
+	        for(int i=0;i<colname.length;i++)
+	        	System.out.println("col: " +colname[i]);
+	        
+	        table.addRow();
+	        
+//	        table.EditRow(1);
+	        
+	        table.DeleteRow(1);
+	        
+	        
 			System.out.println("Done :) .....");
 
 

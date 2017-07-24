@@ -26,27 +26,55 @@ public class WebTable {
 	
 	public String[] getTableHeaders(){
 		
-		 String[]headerArray = null;
+		String[]headerArray = null;
         List <WebElement> headeritems =  this.TableObject.findElements(By.className("v-table-caption-container"));
         
         headerArray = new String[headeritems.size()];
-        int i =0;
+        int iheader =0;
         for ( WebElement item: headeritems) {
-        	System.out.println(item.getText());
-        	headerArray[i] =item.getText();
-        	i++;
-        }
-        
+        	headerArray[iheader] =item.getText();
+        	iheader++;
+        }        
 		return headerArray;
+	}
+	
+	public void addRow(){
+		
+		String fullXpath = String.format("//span[span[text()='%s']]", "Add"); 
+		WebElement tableAdd = this.TableObject.findElement(By.xpath(fullXpath)) ;
+		tableAdd.click();		
+	
+	}
+	
+	public void EditRow(int RowNumber){
+		
+		String fullXpath = String.format("//span[span[text()='%s']]", "Edit"); 
+		WebElement tableAdd = this.TableObject.findElement(By.xpath(fullXpath)) ;
+		tableAdd.click();		
+	
+	}
+	
+	
+	public void DeleteRow(int RowNumber){
+		
+		String fullXpath = String.format("//span[span[text()='%s']]", "Delete"); 
+		WebElement tableAdd = this.TableObject.findElement(By.xpath(fullXpath)) ;
+		tableAdd.click();		
+	
 	}
 	
 	
 	private WebElement findTableByCaption(String sCaption)
 	{
-		String fullXpath = String.format("//div[div[text()='%s']]", sCaption);
-		WebElement tableCaption = FindWebElements.findWebElementVisibleByXpath(fullXpath);
-		WebElement nextsibling = tableCaption.findElement(By.xpath("following-sibling::div"));
+        String fullXpath = String.format("//div[div[text()='%s']]", sCaption);        
+        WebElement tableCaption = FindWebElements.findWebElementVisibleByXpath(fullXpath);        
+        //WebElement parentElement = tableCaption.findElement(By.xpath("./.."));
+        WebElement nextsibling = tableCaption.findElement(By.xpath("following-sibling::div"));
 		
 		return nextsibling;
 	}
+	
+	
+	
+	    
 }
