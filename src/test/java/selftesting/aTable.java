@@ -104,15 +104,15 @@ public class aTable {
 	        for(int i=0;i<colname.length;i++)
 	        	System.out.println("col: " +colname[i]);
 	        
+	        //City
+	       // String a = table.getCellValue("City", 1);
+	        
 	        table.addRow();
 	        
 //	        table.EditRow(1);
 	        
-	        table.DeleteRow(1);
-	        
-	        
+	        table.DeleteRow(1);       	        
 			System.out.println("Done :) .....");
-
 
 		}
 		

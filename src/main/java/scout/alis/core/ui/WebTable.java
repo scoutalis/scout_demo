@@ -40,7 +40,8 @@ public class WebTable {
 	
 	public void addRow(){
 		
-		String fullXpath = String.format("//span[span[text()='%s']]", "Add"); 
+		//String fullXpath = String.format("//span[span[text()='%s']]", "Add");
+		String fullXpath = String.format("//div[span[span[text()='%s']]]", "Add");
 		WebElement tableAdd = this.TableObject.findElement(By.xpath(fullXpath)) ;
 		tableAdd.click();		
 	
@@ -70,6 +71,28 @@ public class WebTable {
 	public void insertDataToRow(Object data , int row){
 		
 	}
+	
+	public String getCellValue(String Header , int Row){
+		
+		String[] ArrHeaders = this.getTableHeaders();
+		int ifound = -1;
+		for(int i=0;i<ArrHeaders.length;i++)
+			if(ArrHeaders[i].equals(Header)){
+				ifound = i;
+				break;
+			}
+							
+		
+		
+		return "d";
+	}
+	
+	public String getCellValue(int column , int Row){
+		
+		return "";
+	}
+	
+			
 	
 	private WebElement findTableByCaption(String sCaption)
 	{
