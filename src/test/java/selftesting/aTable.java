@@ -109,9 +109,13 @@ public class aTable {
 	        
 	        table.addRow();
 	        
+	        table.addRow();
+	        
+	        table.getTableRows();
+	        
 //	        table.EditRow(1);
 	        
-	        table.DeleteRow(1);       	        
+	       // table.DeleteRow(1);       	        
 			System.out.println("Done :) .....");
 
 		}

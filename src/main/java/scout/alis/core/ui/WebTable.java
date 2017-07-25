@@ -13,6 +13,7 @@ import webdriver.FindWebElements;
 public class WebTable {
 	
 	protected final static WebDriver DRIVER = Driver.instance;
+	private static JavascriptExecutor js =(JavascriptExecutor)DRIVER;	
 	private WebElement TableObject= null ;
 	
 	private String TXT_Caption="";
@@ -43,16 +44,16 @@ public class WebTable {
 		//String fullXpath = String.format("//span[span[text()='%s']]", "Add");
 		String fullXpath = String.format("//div[span[span[text()='%s']]]", "Add");
 		WebElement tableAdd = this.TableObject.findElement(By.xpath(fullXpath)) ;
-		tableAdd.click();		
-	
+		tableAdd.click();
+		((JavascriptExecutor)DRIVER).executeScript("arguments[0].scrollIntoView(true);", this.TableObject);	
 	}
 	
 	public void EditRow(int RowNumber){
 		
 		String fullXpath = String.format("//span[span[text()='%s']]", "Edit"); 
 		WebElement tableAdd = this.TableObject.findElement(By.xpath(fullXpath)) ;
-		tableAdd.click();		
-	
+		tableAdd.click();	
+		((JavascriptExecutor)DRIVER).executeScript("arguments[0].scrollIntoView(true);", this.TableObject);	
 	}
 	
 	
@@ -60,8 +61,8 @@ public class WebTable {
 		
 		String fullXpath = String.format("//span[span[text()='%s']]", "Delete"); 
 		WebElement tableAdd = this.TableObject.findElement(By.xpath(fullXpath)) ;
-		tableAdd.click();		
-	
+		tableAdd.click();	
+		((JavascriptExecutor)DRIVER).executeScript("arguments[0].scrollIntoView(true);", this.TableObject);	
 	}
 	
 	public void insertDataIntonewRow(Object data){
@@ -102,6 +103,15 @@ public class WebTable {
         WebElement nextsibling = tableCaption.findElement(By.xpath("following-sibling::div"));
 		
 		return nextsibling;
+	}
+	
+	public List<WebElement> getTableRows(){
+		String fullXpath = String.format("//tr[text()='%s']", ".*v-table-row.*");
+		
+		//List<WebElement> list = this.TableObject.findElements(By.className("v-table-row"));
+		
+		List<WebElement> list = this.TableObject.findElements(By.xpath("//tr[contains(@class, 'v-table-row')]"));
+		return list;		
 	}
 	
 	
