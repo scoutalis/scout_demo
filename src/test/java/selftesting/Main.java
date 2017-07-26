@@ -3,7 +3,9 @@ package selftesting;
 
 import org.testng.Assert;
 
-import scout.alis.core.ui.LoginPage;
+import scout.alis.business.LoginPage;
+import scout.alis.core.ui.WebComboBox;
+import scout.alis.core.ui.WebEdit;
 import scout.alis.core.ui.WebPage;
 import webdriver.Driver;
 
@@ -26,13 +28,17 @@ public class Main {
 		
 		activePageName = WebPage.getActivePageName();
 		Assert.assertEquals(activePageName, "Client Details");
-				
-		WebPage.alisTextField.setTextFieldByCaption("First Name", "John 2307171600");
-		WebPage.alisTextField.setTextFieldByCaption("Middle Name", "Maininsured");
-		WebPage.alisTextField.setTextFieldByCaption("Last Name", "Fifty");
-		WebPage.alisTextField.setTextFieldByCaption("Date Of Birth", "01/01/1965");
-		WebPage.alisComboBox.setComboBoxByCaption("Gender", "male");
-		WebPage.alisComboBox.setComboBoxByCaption("Tobacco", "No");
+
+		WebComboBox alisComboBox = new WebComboBox();
+		WebEdit alisTextField = new WebEdit();	
+		
+		alisTextField.initializeWebEdit("First Name").setText("John 2307171600");
+		alisTextField.initializeWebEdit("Middle Name").setText("Maininsured");
+		alisTextField.initializeWebEdit("Last Name").setText("Fifty");
+		alisTextField.initializeWebEdit("Date Of Birth").setText("01/01/1965");		
+		alisComboBox.initializeWebEdit("Gender").selectComboBoxItem("male");
+		alisComboBox.initializeWebEdit("Tobacco").selectComboBoxItem("No");
+
 		WebPage.alisCheckBox.setCheckboxTrueByLabelName("Non Driver");
 		
 		

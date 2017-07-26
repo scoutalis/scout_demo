@@ -28,7 +28,8 @@ public class Driver {
 
     private static Properties loadProperties(){
         Properties props = new Properties();
-        String propertiesFile = projectDir + "\\src\\main\\webdrivers\\config.properties";
+        //String propertiesFile = projectDir + "\\src\\main\\webdrivers\\config.properties";
+        String propertiesFile = projectDir + "\\testData\\config.properties";
         try{
             FileInputStream fs = new FileInputStream(propertiesFile);
             props.load(fs);

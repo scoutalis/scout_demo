@@ -2,7 +2,10 @@ package selftesting;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.openqa.selenium.By;
@@ -15,7 +18,7 @@ import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
-import scout.alis.core.ui.LoginPage;
+import scout.alis.business.LoginPage;
 import scout.alis.core.ui.WebPage;
 import scout.alis.core.ui.WebTable;
 import scout.testdata.ExcelUtils;
@@ -26,13 +29,17 @@ public class aTable {
 
 	protected final static WebDriver DRIVER = Driver.instance;
 	private static String projectDir = System.getProperty("user.dir");
-	private static Properties props = loadProperties();
-	private static JavascriptExecutor js =(JavascriptExecutor)DRIVER;
+	//private static Properties props = loadProperties();
+	//private static JavascriptExecutor js =(JavascriptExecutor)DRIVER;
 	
 	public static ExtentReports extent ;
 	public static ExtentTest test;
 	
 	public static void main(String[] args) throws Exception {
+		
+
+
+		
 		
 		
 		extent = new ExtentReports("C:\\Selenuim\\reports\\TestResult.html",true);
@@ -40,7 +47,7 @@ public class aTable {
 		
 		test.log(LogStatus.INFO, "open browser");
 		
-		 String sTestCaseName;
+		 //String sTestCaseName;
 	        int iTestCaseRow=-1;
 			String sProject = "TFL"; //props.getProperty("Project");		
 			String path =  projectDir + "\\testData\\LoginData.xlsx" ;
@@ -62,9 +69,9 @@ public class aTable {
 	        
 			Driver.getInstance();
 			
-			Driver.getBaseUrl("https://www.google.co.il");
-			//Driver.getBaseUrl(URL);
-			/**
+			//Driver.getBaseUrl("https://www.google.co.il");
+			Driver.getBaseUrl(URL);
+			
 			LoginPage.login(userName, password, dataBase);
 			WebPage.waitLoading();
 						
@@ -84,7 +91,7 @@ public class aTable {
 			WebPage.waitLoading();
 			
 			activePageName = WebPage.getActivePageName();
-			Assert.assertEquals(activePageName, "Client Details");*/
+			Assert.assertEquals(activePageName, "Client Details");
 			/*
 			String sTable = "Address Details";
 			//String sTable = "Contact Details";
@@ -113,7 +120,7 @@ public class aTable {
 	        }
 			
 	        */
-			/**
+			
 	        WebTable table = new WebTable("Address Details");
 	        
 	        String[] colname = table.getTableHeaders();
@@ -124,20 +131,63 @@ public class aTable {
 	        //City
 	       // String a = table.getCellValue("City", 1);
 	        
-	        table.addRow();
+	        /**table.addRow();
 	        
 	        table.addRow();
 	        
-	        table.getTableRows();
+	        String str1 =table.getCellValue("Country",1); 
+	        String str2 =table.getCellValue(9,2);*/
+	        
+	        String[][] data = new String[5][2];
+	        data[0][0] ="Address Type";
+	        data[0][1] ="Physical";	    	      	        		 
+	        data[1][0] ="Address Line 1";
+	        data[1][1] ="Address Line 1";	
+	        data[2][0] ="City";
+	        data[2][1] ="Test";	
+	        data[3][0] ="State";
+	        data[3][1] ="IL Illinois";	
+	        data[4][0] ="Zip Code";
+	        data[4][1] ="1234";
+	        table.insertDataIntoNewRow(data);
+	        
+	        
+	        /*
+			Map<String, String> dataInput = new HashMap<String, String>();
+			dataInput.put("Address Type","Physical");
+			dataInput.put("Address Line 1","Address Line 1");
+			dataInput.put("City", "Test");
+			dataInput.put("State","IL Illinois");
+			dataInput.put("Country", "United States");
+			table.insertDataIntoNewRow(dataInput);	*/	
+			
+			/*for(String key: dataInput.keySet()){
+				System.out.println(key + " - " + dataInput.get(key));
+			}*/
+		
+	        
+			//table.insertDataToRow(dataInput, 2);
+	        
+	        
+			
+			
+			
+	        /**table.setCellValue("Address Type", 2, "Physical");
+	        table.setCellValue("Address Line 1", 2, "Address Line 1");
+	        table.setCellValue("City", 2, "Test");
+	        table.setCellValue("State", 2, "IL Illinois");
+	        table.setCellValue("Country", 2, "United States");*/
+	        
+	        
+	        //table.setCellValue("Address Line 1", 1, "Address1");
 	        
 //	        table.EditRow(1);
 	        
-	       // table.DeleteRow(1);*/     
+	       // table.DeleteRow(1);    
 			
 			extent.endTest(test);
 			extent.flush();
 			System.out.println("Done :) .....");
-
 		}
 		
 		
@@ -154,7 +204,7 @@ public class aTable {
 
 	        return props;
 	    }
-
+/*
 	    private static void doHighlight(WebElement element) throws InterruptedException{
 	        for (int i = 0; i < 5; i++) {
 	            js.executeScript("arguments[0].style.border='3px solid red'", element);
@@ -162,5 +212,6 @@ public class aTable {
 	            js.executeScript("arguments[0].style.border='0px'", element);
 	        }
 	    }
+*/	    
 	    
 	}

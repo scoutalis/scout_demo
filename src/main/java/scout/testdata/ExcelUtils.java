@@ -11,6 +11,9 @@ import java.io.IOException;
 //import java.util.Iterator;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.poi.xssf.usermodel.XSSFCell;
 //import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -36,7 +39,83 @@ public class ExcelUtils {
             throw (e);
         }
     }
+    
+    
+    public static String[][] getDataToArray(String FilePath, String SheetName, int iTestCaseRow, int startColumn)  throws Exception
+    {
+        String[][] tabArray = null;
+        try{
+            FileInputStream ExcelFile = new FileInputStream(FilePath);
+            // Access the required test data sheet
+            ExcelWBook = new XSSFWorkbook(ExcelFile);
+            ExcelWSheet = ExcelWBook.getSheet(SheetName);
+            int startCol = startColumn;
+          //Get Number of Column
+            int totalCols = ExcelWSheet.getRow(0).getLastCellNum();
 
+            //totalCols-=startCol;
+            tabArray=new String[totalCols-startCol][2];
+
+            for (int Col=startCol, Coli=0;Col<totalCols;Col++,Coli++)
+            {
+            	tabArray[Coli][0]=getCellData(0,Col);
+            	tabArray[Coli][1]=getCellData(iTestCaseRow,Col);
+            }
+        }
+        catch (FileNotFoundException e)
+        {
+            System.out.println("Could not read the Excel sheet");
+            e.printStackTrace();
+        }
+
+        catch (IOException e)
+        {
+            System.out.println("Could not read the Excel sheet");
+            e.printStackTrace();
+        }
+
+        return(tabArray);
+    }    
+    
+    
+    public static Map<String, String> getDataToHasshTableMap(String FilePath, String SheetName, int iTestCaseRow, int startColumn)  throws Exception
+    {
+
+    	Map<String, String> dataInputToMap = new HashMap<String, String>();
+    	    	
+        try{
+            FileInputStream ExcelFile = new FileInputStream(FilePath);
+            // Access the required test data sheet
+            ExcelWBook = new XSSFWorkbook(ExcelFile);
+            ExcelWSheet = ExcelWBook.getSheet(SheetName);
+            int startCol = startColumn;
+          //Get Number of Column
+            int totalCols = ExcelWSheet.getRow(0).getLastCellNum();
+
+            //totalCols-=startCol;
+
+            for (int Col=startCol, Coli=0;Col<=totalCols;Col++,Coli++)
+            {
+            	dataInputToMap.put(getCellData(0,Col), getCellData(iTestCaseRow,Col));
+            }
+        }
+        catch (FileNotFoundException e)
+        {
+            System.out.println("Could not read the Excel sheet");
+            e.printStackTrace();
+        }
+
+        catch (IOException e)
+        {
+            System.out.println("Could not read the Excel sheet");
+            e.printStackTrace();
+        }
+
+        return(dataInputToMap);
+    }
+    
+    
+    
     public static Object[][] getTableArray(String FilePath, String SheetName, int iTestCaseRow)    throws Exception
     {
         String[][] tabArray = null;

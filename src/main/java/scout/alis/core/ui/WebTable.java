@@ -1,6 +1,8 @@
 package scout.alis.core.ui;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -25,6 +27,7 @@ public class WebTable {
 		this.TableObject = findTableByCaption(txt_Caption);
 	}
 	
+///////////////////////////////////////////////////////////	
 	public String[] getTableHeaders(){
 		
 		String[]headerArray = null;
@@ -38,63 +41,168 @@ public class WebTable {
         }        
 		return headerArray;
 	}
-	
+///////////////////////////////////////////////////////////	
 	public void addRow(){
 		
 		//String fullXpath = String.format("//span[span[text()='%s']]", "Add");
-		String fullXpath = String.format("//div[span[span[text()='%s']]]", "Add");
+		String fullXpath = String.format(".//div[span[span[text()='%s']]]", "Add");
 		WebElement tableAdd = this.TableObject.findElement(By.xpath(fullXpath)) ;
 		tableAdd.click();
 		((JavascriptExecutor)DRIVER).executeScript("arguments[0].scrollIntoView(true);", this.TableObject);	
+		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
-	
+///////////////////////////////////////////////////////////	
 	public void EditRow(int RowNumber){
 		
-		String fullXpath = String.format("//span[span[text()='%s']]", "Edit"); 
+		String fullXpath = String.format(".//span[span[text()='%s']]", "Edit"); 
 		WebElement tableAdd = this.TableObject.findElement(By.xpath(fullXpath)) ;
 		tableAdd.click();	
-		((JavascriptExecutor)DRIVER).executeScript("arguments[0].scrollIntoView(true);", this.TableObject);	
+		((JavascriptExecutor)DRIVER).executeScript("arguments[0].scrollIntoView(true);", this.TableObject);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		
 	}
 	
-	
+///////////////////////////////////////////////////////////	
 	public void DeleteRow(int RowNumber){
 		
-		String fullXpath = String.format("//span[span[text()='%s']]", "Delete"); 
+		String fullXpath = String.format(".//span[span[text()='%s']]", "Delete"); 
 		WebElement tableAdd = this.TableObject.findElement(By.xpath(fullXpath)) ;
-		tableAdd.click();	
-		((JavascriptExecutor)DRIVER).executeScript("arguments[0].scrollIntoView(true);", this.TableObject);	
-	}
-	
-	public void insertDataIntonewRow(Object data){
+		tableAdd.click();			
+		((JavascriptExecutor)DRIVER).executeScript("arguments[0].scrollIntoView(true);", this.TableObject);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 		
 	}
-	
-	public void insertDataToRow(Object data , int row){
+///////////////////////////////////////////////////////////	
+	public void insertDataIntoNewRow(Map<String, String> inputData){
+		
+		this.addRow();
+		int row = this.getTableRows().size();
+		this.insertDataToRow(inputData, row);
 		
 	}
+
+///////////////////////////////////////////////////////////	
+	public void insertDataIntoNewRow(String[][] inputData){
 	
-	public String getCellValue(String Header , int Row){
+		this.addRow();
+		int row = this.getTableRows().size();
+		this.insertDataToRow(inputData, row);
+	
+	}
+	
+///////////////////////////////////////////////////////////	
+	public void insertDataToRow(Map<String, String> inputData , int row){	
+
+		for(String key: inputData.keySet()){
+			//System.out.println(key + " - " + inputData.get(key));
+			this.setCellValue(key, row, inputData.get(key).toString());
+		}			
+	}
+///////////////////////////////////////////////////////////	
+	public void insertDataToRow(String[][] inputData , int row){	
+	
+		int Lin = inputData.length;
+		
+		for(int i=0;i<Lin;i++){
+			//System.out.println(inputData[i][0] + " - " + inputData[i][1]);
+			this.setCellValue(inputData[i][0], row, inputData[i][1]);
+		}
+	
+	}	
+///////////////////////////////////////////////////////////	
+	public String getCellValue(String headerName , int rowNumber){
 		
 		String[] ArrHeaders = this.getTableHeaders();
 		int ifound = -1;
 		for(int i=0;i<ArrHeaders.length;i++)
-			if(ArrHeaders[i].equals(Header)){
+			if(ArrHeaders[i].equals(headerName)){
 				ifound = i;
 				break;
 			}
-							
 		
+		if(ifound>-1){
+			List<WebElement> tableRows = this.getTableRows();
+			
+			if (rowNumber>0 && rowNumber<=tableRows.size()){			
+				WebElement tableRow = tableRows.get(rowNumber-1);
+				List<WebElement> tableCells = tableRow.findElements(By.xpath(".//td[contains(@class, 'v-table-cell-content')]"));			
+				return tableCells.get(ifound).findElement(By.tagName("input")).getAttribute("value");
+			}
+		}
 		
-		return "d";
+		return null;
 	}
 	
-	public String getCellValue(int column , int Row){
+///////////////////////////////////////////////////////////
+	public String getCellValue(int columnNumber , int rowNumber){
+		
+		String[] ArrHeaders = this.getTableHeaders();
+		
+		if(columnNumber>=0 && columnNumber <= ArrHeaders.length+1){
+			List<WebElement> tableRows = this.getTableRows();
+			if (rowNumber>0 && rowNumber<=tableRows.size()){
+				WebElement tableRow = tableRows.get(rowNumber-1);
+				List<WebElement> tableCells = tableRow.findElements(By.xpath(".//td[contains(@class, 'v-table-cell-content')]"));			
+				return tableCells.get(columnNumber-1).findElement(By.tagName("input")).getAttribute("value");			
+			}		
+			
+		}
+		
 		
 		return "";
 	}
+
 	
+///////////////////////////////////////////////////////////	
+	public void setCellValue(String headerName , int rowNumber,String value){
+	
+		String[] ArrHeaders = this.getTableHeaders();
+		int ifound = -1;
+		
+		for(int i=0;i<ArrHeaders.length;i++)
+			if(ArrHeaders[i].equals(headerName)){
+			ifound = i;
+			break;
+		}
+		
+		if(ifound>-1){
+			List<WebElement> tableRows = this.getTableRows();			
+			if (rowNumber>0 && rowNumber<=tableRows.size()){			
+				WebElement tableRow = tableRows.get(rowNumber-1);
+				List<WebElement> tableCells = tableRow.findElements(By.xpath(".//td[contains(@class, 'v-table-cell-content')]"));			
+				String tableCellClass = tableCells.get(ifound).findElement(By.tagName("input")).getAttribute("class");
+
+				if(tableCellClass.contains("v-textfield")){
+				WebEdit alisTextField = new WebEdit(tableCells.get(ifound).findElement(By.tagName("input")));
+				alisTextField.setText(value);
+				}
+				else if (tableCellClass.contains("v-filterselect-input")){
+					WebComboBox alisComboBox = new WebComboBox(tableCells.get(ifound).findElement(By.tagName("input")));
+					alisComboBox.selectComboBoxItem(value);
+				}
+			}
+		}
+		
+	}	
 			
-	
+///////////////////////////////////////////////////////////
 	private WebElement findTableByCaption(String sCaption)
 	{
         String fullXpath = String.format("//div[div[text()='%s']]", sCaption);        
@@ -104,12 +212,10 @@ public class WebTable {
 		
 		return nextsibling;
 	}
-	
-	public List<WebElement> getTableRows(){
-		String fullXpath = String.format("//tr[text()='%s']", ".*v-table-row.*");
-		
-		//List<WebElement> list = this.TableObject.findElements(By.className("v-table-row"));
-		
+///////////////////////////////////////////////////////////
+	private List<WebElement> getTableRows(){
+		//String fullXpath = String.format("//tr[text()='%s']", ".*v-table-row.*");		
+		//List<WebElement> list = this.TableObject.findElements(By.className("v-table-row"));		
 		List<WebElement> list = this.TableObject.findElements(By.xpath("//tr[contains(@class, 'v-table-row')]"));
 		return list;		
 	}

@@ -1,4 +1,4 @@
-package scout.alis.core.ui;
+package scout.alis.business;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
