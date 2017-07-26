@@ -11,6 +11,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
+
 import scout.alis.core.ui.LoginPage;
 import scout.alis.core.ui.WebPage;
 import scout.alis.core.ui.WebTable;
@@ -25,7 +29,17 @@ public class aTable {
 	private static Properties props = loadProperties();
 	private static JavascriptExecutor js =(JavascriptExecutor)DRIVER;
 	
+	public static ExtentReports extent ;
+	public static ExtentTest test;
+	
 	public static void main(String[] args) throws Exception {
+		
+		
+		extent = new ExtentReports("C:\\Selenuim\\reports\\TestResult.html",true);
+		test = extent.startTest("login");
+		
+		test.log(LogStatus.INFO, "open browser");
+		
 		 String sTestCaseName;
 	        int iTestCaseRow=-1;
 			String sProject = "TFL"; //props.getProperty("Project");		
@@ -47,8 +61,10 @@ public class aTable {
 	        String dataBase= ExcelUtils.getCellData(iTestCaseRow,"DataBase");      
 	        
 			Driver.getInstance();
-			Driver.getBaseUrl(URL);
 			
+			Driver.getBaseUrl("https://www.google.co.il");
+			//Driver.getBaseUrl(URL);
+			/**
 			LoginPage.login(userName, password, dataBase);
 			WebPage.waitLoading();
 						
@@ -68,7 +84,7 @@ public class aTable {
 			WebPage.waitLoading();
 			
 			activePageName = WebPage.getActivePageName();
-			Assert.assertEquals(activePageName, "Client Details");
+			Assert.assertEquals(activePageName, "Client Details");*/
 			/*
 			String sTable = "Address Details";
 			//String sTable = "Contact Details";
@@ -97,6 +113,7 @@ public class aTable {
 	        }
 			
 	        */
+			/**
 	        WebTable table = new WebTable("Address Details");
 	        
 	        String[] colname = table.getTableHeaders();
@@ -115,7 +132,10 @@ public class aTable {
 	        
 //	        table.EditRow(1);
 	        
-	       // table.DeleteRow(1);       	        
+	       // table.DeleteRow(1);*/     
+			
+			extent.endTest(test);
+			extent.flush();
 			System.out.println("Done :) .....");
 
 		}
