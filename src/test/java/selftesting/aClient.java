@@ -1,5 +1,7 @@
 package selftesting;
 
+//import library.Utility;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,6 +10,8 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.text.Utilities;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -15,6 +19,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 
 import scout.alis.business.LoginPage;
 import scout.alis.core.ui.WebButton;
@@ -32,12 +38,11 @@ import com.relevantcodes.extentreports.LogStatus;
 
 public class aClient {
 
-	
+	//x
 	protected static WebDriver DRIVER; 
 	private static String projectDir = System.getProperty("user.dir");
 	//private static Properties props = loadProperties();
 	//private static JavascriptExecutor js =(JavascriptExecutor)DRIVER;
-	
 	
 	public static ExtentReports extent ;
 	public static ExtentTest test;
@@ -55,6 +60,13 @@ public class aClient {
 		test = extent.startTest("Client");
 		
 		test.log(LogStatus.INFO, "open browser");
+
+
+        /*String screenshot_path=Utility.captureScreenshot(DRIVER, "Error");
+        String image= test.addScreenCapture(screenshot_path);
+        test.log(LogStatus.PASS, "open browser");*/
+        
+		
 		
 		String sProject = "TFL"; //props.getProperty("Project");
 		
@@ -199,6 +211,10 @@ public class aClient {
 
 	        // Close
 	        btn.clickAlisCloseButton();
+
+	        
+	        
+	        
 	        
 			extent.endTest(test);
 			extent.flush();
@@ -207,7 +223,26 @@ public class aClient {
 		
 
 	}
-
+/*
+	@AfterMethod
+	public void tearDown(ITestResult result)
+	{
+		if(result.getStatus()==ITestResult.FAILURE)
+		{
+	
+		String screenshot_path=Utility.captureScreenshot(driver, result.getName());
+		String image= logger.addScreenCapture(screenshot_path);
+		logger.log(LogStatus.FAIL, "Title verification", image);
+	
+	
+		}
+	
+		report.endTest(logger);
+		report.flush();
+	
+		DRIVER.get("C:\\Report\\LearnAutomation.html");
+	}
+	*/
 	
 	
     public static Properties loadProperties(){
