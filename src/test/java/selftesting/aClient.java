@@ -10,8 +10,6 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.text.Utilities;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -35,6 +33,8 @@ import webdriver.FindWebElements;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
+
+
 
 public class aClient {
 
@@ -60,7 +60,12 @@ public class aClient {
 		test = extent.startTest("Client");
 		
 		test.log(LogStatus.INFO, "open browser");
-
+		/*
+        extent.config().documentTitle("Sample ExtentReports report");
+        
+        extent.config().reportHeadline("Test report for ParaBank login tests generated using <b>ExtentReports</b>");
+        	*/
+	 
 
         /*String screenshot_path=Utility.captureScreenshot(DRIVER, "Error");
         String image= test.addScreenCapture(screenshot_path);
@@ -93,6 +98,7 @@ public class aClient {
 			Driver.getInstance();
 			
 			//Driver.getBaseUrl("https://www.google.co.il");
+
 			Driver.getBaseUrl(URL);
 			
 			LoginPage.login(userName, password, dataBase);
@@ -100,7 +106,7 @@ public class aClient {
 						
 			String activePageName = WebPage.getActivePageName();
 			Assert.assertEquals(activePageName, "User Dashboard");
-					
+			
 			
 			///////////////////////////////////////////
 			//////////////////////////////////////////
@@ -152,7 +158,7 @@ public class aClient {
 			
 			// insert Data using Array[][]
 			/////////////////////////////////////
-			String[][] inputData = ExcelUtils.getDataToArray(path, sheetName, iTestCaseRow, 4); 
+			String[][] inputData = ExcelUtils.getDataToArray(path, sheetName, iTestCaseRow, 3); 
 
 			String sHeader;
 			String sval;
@@ -176,18 +182,23 @@ public class aClient {
 						alisComboBox.selectComboBoxItem(sval);
 					}
 				}
+				
+				if(sHeader.equals("NI Type")){
+					Thread.sleep(2000);
+				}
+				
+				
 			}
-			
-			
+						
 			sheetName = "Address_Details";
 			WebTable AddressDetailstable = new WebTable("Address Details");
 			String[][] inputDataAddressDetails = ExcelUtils.getDataToArray(path, sheetName, iTestCaseRow, 1);
+			 if(sProject.equalsIgnoreCase("AF")) AddressDetailstable.tableFormat=2;
 			AddressDetailstable.insertDataIntoNewRow(inputDataAddressDetails);
 			
 			
 			WebTable PaymentArrangementTable = new WebTable("Payment Arrangement");		
-			PaymentArrangementTable.addRow();		
-		
+			PaymentArrangementTable.addRow();	
 									
 		       //Save
 			WebButton btn = new WebButton();
@@ -212,10 +223,6 @@ public class aClient {
 	        // Close
 	        btn.clickAlisCloseButton();
 
-	        
-	        
-	        
-	        
 			extent.endTest(test);
 			extent.flush();
 			System.out.println("Client Number: "+numbers);

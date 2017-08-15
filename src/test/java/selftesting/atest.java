@@ -155,6 +155,7 @@ public class atest {
 		sheetName = "Address_Details";
 		WebTable AddressDetailstable = new WebTable("Address Details");
 		String[][] inputDataAddressDetails = ExcelUtils.getDataToArray(path, sheetName, iTestCaseRow, 1);
+		AddressDetailstable.tableFormat = 2;
 		AddressDetailstable.insertDataIntoNewRow(inputDataAddressDetails);
 		
 		
@@ -231,7 +232,7 @@ public class atest {
 		
 		System.out.println("Done :) .....");
 		
-		/**WebEdit webedit = new WebEdit();		
+		/*WebEdit webedit = new WebEdit();		
 		webedit.setTXTCaption("First Name");
 		webedit.setText("John156324");
 

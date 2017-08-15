@@ -37,10 +37,6 @@ public class aTable {
 	
 	public static void main(String[] args) throws Exception {
 		
-
-
-		
-		
 		
 		extent = new ExtentReports("C:\\Selenuim\\reports\\TestResult.html",true);
 		test = extent.startTest("login");

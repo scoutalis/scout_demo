@@ -21,6 +21,11 @@ public class WebTable {
 	private String TXT_Caption="";
 	private String TXT_id;
 	
+	
+	// 1 - ALIS 6
+	// 2 - ALIS 7
+	public int tableFormat = 1;
+	
 
 	public WebTable(String txt_Caption) {
 		this.TXT_Caption = txt_Caption;
@@ -31,7 +36,26 @@ public class WebTable {
 	public String[] getTableHeaders(){
 		
 		String[]headerArray = null;
-        List <WebElement> headeritems =  this.TableObject.findElements(By.className("v-table-caption-container"));
+        //6631
+		List <WebElement> headeritems=null;
+		
+		switch (this.tableFormat) {
+        case 1:
+        	headeritems =  this.TableObject.findElements(By.className("v-table-caption-container"));
+        	break;
+        case 2:
+        	headeritems =  this.TableObject.findElements(By.tagName("th"));
+        	break;
+        default:	
+        	headeritems =  this.TableObject.findElements(By.className("v-table-caption-container"));
+        	break;
+		}
+		
+		/*
+		headeritems =  this.TableObject.findElements(By.className("v-table-caption-container"));        
+		//7.0
+		if(headeritems.size()==0) headeritems =  this.TableObject.findElements(By.tagName("th"));
+        */
         
         headerArray = new String[headeritems.size()];
         int iheader =0;
@@ -51,7 +75,7 @@ public class WebTable {
 		((JavascriptExecutor)DRIVER).executeScript("arguments[0].scrollIntoView(true);", this.TableObject);	
 		
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -145,8 +169,7 @@ public class WebTable {
 				List<WebElement> tableCells = tableRow.findElements(By.xpath(".//td[contains(@class, 'v-table-cell-content')]"));			
 				return tableCells.get(ifound).findElement(By.tagName("input")).getAttribute("value");
 			}
-		}
-		
+		}		
 		return null;
 	}
 	
@@ -164,8 +187,7 @@ public class WebTable {
 			}		
 			
 		}
-		
-		
+				
 		return "";
 	}
 
@@ -186,7 +208,27 @@ public class WebTable {
 			List<WebElement> tableRows = this.getTableRows();			
 			if (rowNumber>0 && rowNumber<=tableRows.size()){			
 				WebElement tableRow = tableRows.get(rowNumber-1);
-				List<WebElement> tableCells = tableRow.findElements(By.xpath(".//td[contains(@class, 'v-table-cell-content')]"));			
+
+				List<WebElement> tableCells = null;
+/*				
+				tableCells = tableRow.findElements(By.xpath(".//td[contains(@class, 'v-table-cell-content')]"));
+				
+				if(tableCells.size()==0) tableCells = this.TableObject.findElements(By.xpath(".//tbody[contains(@class, 'v-grid-body')]//tr[contains(@class, 'v-grid-row')]//td[contains(@class, 'v-grid-cell')]"));
+*/
+				
+				switch (this.tableFormat) {
+		        case 1:
+		        	tableCells = tableRow.findElements(By.xpath(".//td[contains(@class, 'v-table-cell-content')]"));
+		        	break;
+		        case 2:
+		        	tableCells = this.TableObject.findElements(By.xpath(".//tbody[contains(@class, 'v-grid-body')]//tr[contains(@class, 'v-grid-row')]//td[contains(@class, 'v-grid-cell')]"));
+		        	break;
+		        default:	
+		        	tableCells = tableRow.findElements(By.xpath(".//td[contains(@class, 'v-table-cell-content')]"));
+		        	break;
+				}					
+				
+				
 				String tableCellClass = tableCells.get(ifound).findElement(By.tagName("input")).getAttribute("class");
 
 				if(tableCellClass.contains("v-textfield")){
@@ -215,8 +257,27 @@ public class WebTable {
 ///////////////////////////////////////////////////////////
 	private List<WebElement> getTableRows(){
 		//String fullXpath = String.format("//tr[text()='%s']", ".*v-table-row.*");		
-		//List<WebElement> list = this.TableObject.findElements(By.className("v-table-row"));		
-		List<WebElement> list = this.TableObject.findElements(By.xpath("//tr[contains(@class, 'v-table-row')]"));
+		//List<WebElement> list = this.TableObject.findElements(By.className("v-table-row"));
+		/*
+		//ALIS 6631
+		List<WebElement> list = this.TableObject.findElements(By.xpath(".//tr[contains(@class, 'v-table-row')]"));
+		//ALIS 7.0
+		if(list.size()==0) list = this.TableObject.findElements(By.xpath(".//tbody[contains(@class, 'v-grid-body')]//tr[contains(@class, 'v-grid-row')]"));
+*/
+		List<WebElement> list = null;
+		switch (this.tableFormat) {
+        case 1:
+        	list = this.TableObject.findElements(By.xpath(".//tr[contains(@class, 'v-table-row')]"));
+        	break;
+        case 2:
+        	list = this.TableObject.findElements(By.xpath(".//tbody[contains(@class, 'v-grid-body')]//tr[contains(@class, 'v-grid-row')]"));
+        	break;
+        default:	
+        	list = this.TableObject.findElements(By.xpath(".//tr[contains(@class, 'v-table-row')]"));
+        	break;
+		}
+		
+		
 		return list;		
 	}
 	
