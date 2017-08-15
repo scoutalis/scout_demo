@@ -155,7 +155,11 @@ public class atest {
 		sheetName = "Address_Details";
 		WebTable AddressDetailstable = new WebTable("Address Details");
 		String[][] inputDataAddressDetails = ExcelUtils.getDataToArray(path, sheetName, iTestCaseRow, 1);
-		AddressDetailstable.tableFormat = 2;
+		if(sProject.equals("TFL")) 
+			AddressDetailstable.tableFormat = 1;
+		else
+			AddressDetailstable.tableFormat = 2;
+		
 		AddressDetailstable.insertDataIntoNewRow(inputDataAddressDetails);
 		
 		
