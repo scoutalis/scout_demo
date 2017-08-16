@@ -27,7 +27,9 @@ public class atest {
 
        // String sTestCaseName;
         int iTestCaseRow=-1;
-		String sProject = "AF"; //props.getProperty("Project");		
+		String sProject = "AF"; //props.getProperty("Project");	
+		
+		
 		String path =  projectDir + "\\testData\\LoginData.xlsx" ;
 		String sheetName = "LogIn";
 		
@@ -42,12 +44,8 @@ public class atest {
         
         //get Excel data to Array
        //String[][]arr = ExcelUtils.getDataToArray(path, sheetName, 1,1);
-        
-        
         // get excel data to Map
        // Map<String, String> mapData = ExcelUtils.getDataToHasshTableMap(path, sheetName, 1,4);
-        
-        
                 
         String URL = ExcelUtils.getCellData(iTestCaseRow,"URL");
         String userName = ExcelUtils.getCellData(iTestCaseRow,"UserName");
@@ -155,6 +153,7 @@ public class atest {
 		sheetName = "Address_Details";
 		WebTable AddressDetailstable = new WebTable("Address Details");
 		String[][] inputDataAddressDetails = ExcelUtils.getDataToArray(path, sheetName, iTestCaseRow, 1);
+		
 		if(sProject.equals("TFL")) 
 			AddressDetailstable.tableFormat = 1;
 		else
